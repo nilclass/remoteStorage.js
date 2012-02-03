@@ -2,8 +2,8 @@ define(function(require) {
 
   require(['./controller'], function(controller) {
     window.remoteStorage = {
-      createClients: function(userAddress, receiverPageAddress, categories, cb) {
-        return controller.createClients(userAddress, receverPageAddress, categories, cb);
+      createClients: function(userAddress, categories, receiverPageAddress, cb) {
+        return controller.createClients(userAddress, categories, receverPageAddress, cb);
       },
       getPublic: function(userAddress, key, cb) {
         cb('not implemented');

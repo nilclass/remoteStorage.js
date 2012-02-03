@@ -15,7 +15,7 @@ define([
       delete: function() {}
     };
   }
-  function createClients(userAddress, receiverPageAddress, categories, cb) {
+  function createClients(userAddress, categories, receiverPageAddress, cb) {
     webfinger.getAttributes(userAddress, {
       allowHttpWebfinger: true,
       allowSingleOriginWebfinger: false,
