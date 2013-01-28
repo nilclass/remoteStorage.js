@@ -135,6 +135,9 @@ define(['../remoteStorage'], function(remoteStorage) {
           errorHandlers.push(cb);
         }
       }
+      function getAll() {
+        return myPrivateBaseClient.getAll(listName + '/');
+      }
       // Class: TaskList
       return {
         // Method: getIds
@@ -210,7 +213,9 @@ define(['../remoteStorage'], function(remoteStorage) {
         // Method: on
         //
         // Delegated to <BaseClient.on>
-        on            : on
+        on            : on,
+
+        getAll: getAll
       };
     }
     return {
