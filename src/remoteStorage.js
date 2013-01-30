@@ -407,7 +407,6 @@ define([
     //
     // Parameters:
     //   userAddress - a user address in the form user@host
-    //   callback - a callback to receive the client
     //
     // If there is no storageInfo cached for this userAddress, this will trigger
     // a webfinger discovery and when that succeeded, return the client through
@@ -426,21 +425,18 @@ define([
     //   });
     //   (end code)
     getForeignClient: function(userAddress, callback) {
-      var client = foreignClient.getClient(userAddress);
-      if(wireClient.hasStorageInfo(userAddress)) {
-        callback(null, client);
-      } else {
-        webfinger.getStorageInfo(
-          userAddress, { timeout: 5000 }, function(err, storageInfo) {
-            if(err) {
-              callback(err);
-            } else {
+      return util.makePromise(function(promise) {
+        var client = foreignClient.getClient(userAddress);
+        if(wireClient.hasStorageInfo(userAddress)) {
+          promise.fulfill(client);
+        } else {
+          webfinger.getStorageInfo(userAddress).
+            then(function(storageInfo) {
               wireClient.addStorageInfo(userAddress, storageInfo);
-              callback(null, client);
-            }
-          }
-        );
-      }
+              promise.fulfill(client);
+            }, promise.fail.bind(promise));
+        }
+      });
     },
 
     getClient: function(scope) {

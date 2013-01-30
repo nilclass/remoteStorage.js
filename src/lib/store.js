@@ -154,6 +154,9 @@ define([
           node.diff = {};
           node.data = {};
         }
+        if(typeof(node.data) === 'undefined' && isForeign(path)) {
+          node.pending = true;
+        }
       }
 
       return node;

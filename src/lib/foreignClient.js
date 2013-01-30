@@ -99,7 +99,9 @@ define(['./util', './baseClient', './getputdelete', './store'], function(util, B
     },
 
     nodeGivesAccess: function(path, mode) {
-      return mode == 'r';
+      return util.makePromise(function(promise) {
+        promise.fulfill(mode == 'r');
+      });
     },
 
     on: function(eventName, handler) {
